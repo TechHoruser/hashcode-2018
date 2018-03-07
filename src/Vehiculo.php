@@ -41,4 +41,19 @@ class Vehiculo
     public function getCaminos(){
         return $this->caminos;
     }
+
+    /**
+     * @param Camino $camino
+     */
+    public function addCamino( $camino ){
+        $this->caminos[] = $camino->id;
+
+        $dis = Coordinate::distanceBetweenCoordinates( $this->coordenada, $camino->inicio );
+        $tiempo = 0;
+        if ( $dis + $this->tiempo < $camino->minT ){
+            $tiempo = $camino->minT - $dis + $this->tiempo;
+        }
+
+        $this->tiempo += $dis + $tiempo;
+    }
 }
